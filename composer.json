@@ -1,0 +1,28 @@
+{
+	"name": "reganface/RGP",
+	"type": "library",
+	"description": "PHP library for accessing the RGP API",
+	"keywords": [
+		"RGP",
+		"Rock Gym Pro"
+	],
+	"homepage": "https://example.com",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Chris Regan",
+			"email": "cregan22@gmail.com",
+			"homepage": "http://example.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0",
+		"ext-curl": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"reganface\\RGP\\": "src"
+		}
+	}
+}
