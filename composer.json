@@ -6,13 +6,13 @@
 		"RGP",
 		"Rock Gym Pro"
 	],
-	"homepage": "https://example.com",
-	"license": "MIT",
+	"homepage": "https://github.com/reganface/RGP-API",
+	"license": "GPL-3.0-or-later",
 	"authors": [
 		{
 			"name": "Chris Regan",
 			"email": "cregan22@gmail.com",
-			"homepage": "http://example.com",
+			"homepage": "https://github.com/reganface/RGP-API",
 			"role": "Developer"
 		}
 	],
