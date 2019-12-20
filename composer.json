@@ -1,5 +1,5 @@
 {
-	"name": "reganface/RGP",
+	"name": "reganface/rgp",
 	"type": "library",
 	"description": "PHP library for accessing the RGP API",
 	"keywords": [
