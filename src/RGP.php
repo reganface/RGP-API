@@ -47,7 +47,11 @@ class RGP {
 			"limit" => $limit
 		];
 
-		return $this->_make_call($path, $params);
+		$page_result = $this->_make_call($path, $params);
+		$result = $this->fetch_page($page_result["pages"][0]);
+		$result["pages"] = $page_result["pages"];
+		return $result;
+
 	}
 
 
@@ -62,7 +66,10 @@ class RGP {
 			"customer" => $customer_id
 		];
 
-		return $this->_make_call($path, $params);
+		$page_result = $this->_make_call($path, $params);
+		$result = $this->fetch_page($page_result["pages"][0]);
+		$result["pages"] = $page_result["pages"];
+		return $result;
 	}
 
 
@@ -70,7 +77,9 @@ class RGP {
 	public function get_booking($facility_code, $booking_id) {
 		$path = "/bookings/facility/$facility_code/$booking_id";
 
-		return $this->_make_call($path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 
@@ -89,7 +98,10 @@ class RGP {
 			"limit" => $limit
 		];
 
-		return $this->_make_call($path, $params);
+		$page_result = $this->_make_call($path, $params);
+		$result = $this->fetch_page($page_result["pages"][0]);
+		$result["pages"] = $page_result["pages"];
+		return $result;
 	}
 
 
@@ -103,7 +115,10 @@ class RGP {
 			"customer" => $customer_id
 		];
 
-		return $this->_make_call($path, $params);
+		$page_result = $this->_make_call($path, $params);
+		$result = $this->fetch_page($page_result["pages"][0]);
+		$result["pages"] = $page_result["pages"];
+		return $result;
 	}
 
 
@@ -111,7 +126,9 @@ class RGP {
 	public function get_checkin($facility_code, $checkin_id) {
 		$path = "/checkins/facility/$facility_code/$checkin_id";
 
-		return $this->_make_call($path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 
@@ -127,7 +144,9 @@ class RGP {
 	public function get_customer($customer_id) {
 		$path = "/customers/$customer_id";
 
-		return $this->_make_call($path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 
@@ -140,7 +159,9 @@ class RGP {
 	public function get_debug($request_id) {
 		$path = "/debug/$request_id";
 
-		return $this->_make_call($path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 
@@ -153,7 +174,9 @@ class RGP {
 	public function get_facilities() {
 		$path = "/facilities";
 
-		return $this->_make_call($path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 
@@ -173,7 +196,10 @@ class RGP {
 			"includeVoidInvoices" => $include_void_invoices
 		];
 
-		return $this->_make_call($path, $params);
+		$page_result = $this->_make_call($path, $params);
+		$result = $this->fetch_page($page_result["pages"][0]);
+		$result["pages"] = $page_result["pages"];
+		return $result;
 	}
 
 
@@ -188,7 +214,10 @@ class RGP {
 			"customer" => $customer_id
 		];
 
-		return $this->_make_call($path, $params);
+		$page_result = $this->_make_call($path, $params);
+		$result = $this->fetch_page($page_result["pages"][0]);
+		$result["pages"] = $page_result["pages"];
+		return $result;
 	}
 
 
@@ -196,7 +225,9 @@ class RGP {
 	public function get_invoice($facility_code, $invoice_id) {
 		$path = "/invoices/facility/$facility_code/$invoice_id";
 
-		return $this->_make_call($path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 
@@ -216,10 +247,12 @@ class RGP {
 
 
 	// gets authentication token information
-	public function get_auth_token_info() {
+	public function me() {
 		$path = "/me";
 
-		return $this->_make_call($path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 
@@ -238,7 +271,9 @@ class RGP {
 			"facility" => implode(",", $facilities)
 		];
 
-		return $this->_make_call($path, $params);
+		$rgp_result = $this->_make_call($path, $params);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 	// TODO: there is another settings end point that just does a single facility.
@@ -258,13 +293,29 @@ class RGP {
 			"facility" => implode(",", $facilities)
 		];
 
-		return $this->_make_call($path, $params);
+		$rgp_result = $this->_make_call($path, $params);
+		$result = $this->_split_response($rgp_result);
+		return $result;
 	}
 
 	// TODO: there is a get version for specific facility as well
 	// need to look into this to see what the difference is
 
 
+
+	/***************
+	* PAGES
+	***************/
+
+
+	// get the data from a specific page for paginated results
+	public function fetch_page($full_path) {
+		// remove base URL from supplied path so we can use _make_call()
+		$path = str_replace(self::API_URL, "", $full_path);
+		$rgp_result = $this->_make_call($path);
+		$result = $this->_split_response($rgp_result);
+		return $result;
+	}
 
 
 
@@ -278,9 +329,63 @@ class RGP {
 
 	// makes and API call to RGP
 	private function _make_call($path, $params=null, $method="GET") {
-		$full_path = API_URL . $path;
+		$token = base64_encode("{$this->_api_name}:{$this->_api_key}");
+		$headers = [
+			"Accept: */*",
+			"Authorization: Basic $token"
+		];
 
-		// TODO: setup network call here
+		// build curl request
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// GET is the only method currently in use
+		switch ($method) {
+			case "GET":
+				curl_setopt($ch, CURLOPT_URL, $this->_query_string(self::API_URL . $path, $params));
+				break;
+
+			// POST gets added here when it's supported
+
+			default:
+				throw new RGPException("Invalid request type: {$method}");
+				break;
+		}
+
+		$result = curl_exec($ch);
+
+		// TODO: handle error responses here
+
+		// convert json to array
+		// ping request just returns a string, so if ping was called, just return the result without decoding
+		return $path !== "/ping" ? json_decode($result, true) : $result;
+	}
+
+
+	// create url query string
+	private function _query_string($path, $params) {
+		if (empty($params))
+			return $path;
+
+		$query = http_build_query($params, null, "&", PHP_QUERY_RFC3986);
+		return "{$path}?{$query}";
+	}
+
+
+	// split up the response array to give a consistent structure
+	// RGP returns data with a different key name depending on what endpoint is called.
+	// This method will normalize the returned array to always have data in the "data" key
+	// The rest of the response information will be in the "response" key
+	private function _split_response($response) {
+		$key = $response["rgpApiType"];
+		$data = $response[$key];
+		unset($response[$key]);
+
+		return [
+			"data" => $data,
+			"response" => $response
+		];
 	}
 
 
