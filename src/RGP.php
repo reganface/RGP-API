@@ -22,10 +22,10 @@ class RGP {
 	// constructor
 	public function __construct($api_name, $api_key) {
 		if (!$api_name)
-			throw new RGPException("Error: Missing API name");
+			throw new \Exception("Error: Missing API name");
 
 		if (!$api_key)
-			throw new RGPException("Error: Missing API key");
+			throw new \Exception("Error: Missing API key");
 
 		$this->_api_name = $api_name;
 		$this->_api_key = $api_key;
@@ -47,10 +47,8 @@ class RGP {
 			"limit" => $limit
 		];
 
-		$page_result = $this->_make_call($path, $params);
-		$result = $this->fetch_page($page_result["pages"][0]);
-		$result["pages"] = $page_result["pages"];
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
 
 	}
 
@@ -66,10 +64,9 @@ class RGP {
 			"customer" => $customer_id
 		];
 
-		$page_result = $this->_make_call($path, $params);
-		$result = $this->fetch_page($page_result["pages"][0]);
-		$result["pages"] = $page_result["pages"];
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
+
 	}
 
 
@@ -77,9 +74,9 @@ class RGP {
 	public function get_booking($facility_code, $booking_id) {
 		$path = "/bookings/facility/$facility_code/$booking_id";
 
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
+
 	}
 
 
@@ -98,10 +95,9 @@ class RGP {
 			"limit" => $limit
 		];
 
-		$page_result = $this->_make_call($path, $params);
-		$result = $this->fetch_page($page_result["pages"][0]);
-		$result["pages"] = $page_result["pages"];
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
+
 	}
 
 
@@ -115,10 +111,9 @@ class RGP {
 			"customer" => $customer_id
 		];
 
-		$page_result = $this->_make_call($path, $params);
-		$result = $this->fetch_page($page_result["pages"][0]);
-		$result["pages"] = $page_result["pages"];
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
+
 	}
 
 
@@ -126,9 +121,9 @@ class RGP {
 	public function get_checkin($facility_code, $checkin_id) {
 		$path = "/checkins/facility/$facility_code/$checkin_id";
 
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
+
 	}
 
 
@@ -144,9 +139,9 @@ class RGP {
 	public function get_customer($customer_id) {
 		$path = "/customers/$customer_id";
 
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
+
 	}
 
 
@@ -159,9 +154,9 @@ class RGP {
 	public function get_debug($request_id) {
 		$path = "/debug/$request_id";
 
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
+
 	}
 
 
@@ -174,9 +169,8 @@ class RGP {
 	public function get_facilities() {
 		$path = "/facilities";
 
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
 	}
 
 
@@ -196,10 +190,9 @@ class RGP {
 			"includeVoidInvoices" => $include_void_invoices
 		];
 
-		$page_result = $this->_make_call($path, $params);
-		$result = $this->fetch_page($page_result["pages"][0]);
-		$result["pages"] = $page_result["pages"];
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
+
 	}
 
 
@@ -214,10 +207,9 @@ class RGP {
 			"customer" => $customer_id
 		];
 
-		$page_result = $this->_make_call($path, $params);
-		$result = $this->fetch_page($page_result["pages"][0]);
-		$result["pages"] = $page_result["pages"];
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
+
 	}
 
 
@@ -225,9 +217,9 @@ class RGP {
 	public function get_invoice($facility_code, $invoice_id) {
 		$path = "/invoices/facility/$facility_code/$invoice_id";
 
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
+
 	}
 
 
@@ -243,6 +235,7 @@ class RGP {
 		$path = "/ping";
 
 		return $this->_make_call($path);
+
 	}
 
 
@@ -250,9 +243,9 @@ class RGP {
 	public function me() {
 		$path = "/me";
 
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
+
 	}
 
 
@@ -271,9 +264,9 @@ class RGP {
 			"facility" => implode(",", $facilities)
 		];
 
-		$rgp_result = $this->_make_call($path, $params);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
+
 	}
 
 	// TODO: there is another settings end point that just does a single facility.
@@ -293,9 +286,9 @@ class RGP {
 			"facility" => implode(",", $facilities)
 		];
 
-		$rgp_result = $this->_make_call($path, $params);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+		$response = $this->_make_call($path, $params);
+		return $this->_generate_result($response, true);
+
 	}
 
 	// TODO: there is a get version for specific facility as well
@@ -312,9 +305,10 @@ class RGP {
 	public function fetch_page($full_path) {
 		// remove base URL from supplied path so we can use _make_call()
 		$path = str_replace(self::API_URL, "", $full_path);
-		$rgp_result = $this->_make_call($path);
-		$result = $this->_split_response($rgp_result);
-		return $result;
+
+		$response = $this->_make_call($path);
+		return $this->_generate_result($response);
+
 	}
 
 
@@ -349,7 +343,7 @@ class RGP {
 			// POST gets added here when it's supported
 
 			default:
-				throw new RGPException("Invalid request type: {$method}");
+				throw new \Exception("Invalid request type: {$method}");
 				break;
 		}
 
@@ -363,7 +357,7 @@ class RGP {
 	}
 
 
-	// create url query string
+	// create url query string for GET requests
 	private function _query_string($path, $params) {
 		if (empty($params))
 			return $path;
@@ -386,6 +380,19 @@ class RGP {
 			"data" => $data,
 			"response" => $response
 		];
+	}
+
+
+	// creates the final returned data array based on whether the call was paginated or not
+	private function _generate_result($response, $paged=false) {
+		if ($paged) {
+			$result = $this->fetch_page($response["pages"][0]);	// get first page results
+			$result["pages"] = $response["pages"];				// add list of pages to result
+		} else {
+			$result = $this->_split_response($response);
+		}
+
+		return $result;
 	}
 
 
