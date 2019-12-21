@@ -3,7 +3,7 @@
 // If composer was used, just include the autoload file
 require __DIR__ . '/vendor/autoload.php';
 
-// If the class file was downloaded, include it here.
+// If the class file was downloaded, you will need to include it directly.
 // require "/path/to/RGP.php";
 
 // Add your API Username and API Key here.
@@ -37,7 +37,7 @@ try {
 	$end_date = date("Y-m-d 23:59:59", strtotime("yesterday"));
 	$result = $rgp->get_facility_checkins($facility_code, $start_date, $end_date);
 
-	// The first page of result set is stored in "data" as before.
+	// The first page of the result set is stored in "data" as before.
 	$checkins_p1 = $result["data"];
 
 	// The pages array contains the url for each page.
@@ -50,7 +50,7 @@ try {
 	$checkins_p2 = $result_2["data"];
 
 } catch (Exception $e) {
-	echo "Error: {$e->getMessage()}";
+	echo $e->getMessage();
 }
 
 ?>
