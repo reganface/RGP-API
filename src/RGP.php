@@ -103,7 +103,7 @@ class RGP {
 
 	// gets all check-ins from a specific facility between start and end date
 	public function get_facility_checkins($facility_code, $start_date, $end_date, $limit=null, $customer_id=null) {
-		$path = "/bookings/facility/$facility_code";
+		$path = "/checkins/facility/$facility_code";
 		$params = [
 			"startDateTime" => $start_date,
 			"endDateTime" => $end_date,
