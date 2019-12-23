@@ -219,7 +219,7 @@ This is the request id sent back with the result set of any request.
 
 ## Facilities
 
-## get_facilities()
+### get_facilities()
 ```php
 get_facilities()
 ```
