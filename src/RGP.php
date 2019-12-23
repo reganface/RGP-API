@@ -257,20 +257,20 @@ class RGP {
 
 
 	// gets a single setting value from one or more facilities
+	// when $facilities is omitted, all facilities are returned
+	// when it's an array of facility codes, just those facilities are returned
+	// if it's a string of a single facility code, just that facility is returned
 	public function get_setting($name, $facilities=null) {
-		$path = "/settings";
+		$path = is_string($facilities) ? "/settings/facility/$facilities" : "/settings";
 		$params = [
 			"name" => $name,
-			"facility" => implode(",", $facilities)
+			"facility" => is_array($facilities) ? $facilities : null
 		];
 
 		$response = $this->_make_call($path, $params);
-		return $this->_generate_result($response, true);
+		return $this->_generate_result($response);
 
 	}
-
-	// TODO: there is another settings end point that just does a single facility.
-	// will need to see what the differences are
 
 
 
@@ -280,20 +280,19 @@ class RGP {
 
 
 	// gets the last run version
+	// when $facilities is omitted, all facilities are returned
+	// when it's an array of facility codes, just those facilities are returned
+	// if it's a string of a single facility code, just that facility is returned
 	public function get_version($facilities=null) {
-		$path = "/versions";
+		$path = is_string($facilities) ? "/versions/facility/$facilities" : "/versions";
 		$params = [
-			"facility" => implode(",", $facilities)
+			"facility" => is_array($facilities) ? $facilities : null
 		];
 
 		$response = $this->_make_call($path, $params);
-		return $this->_generate_result($response, true);
+		return $this->_generate_result($response);
 
 	}
-
-	// TODO: there is a get version for specific facility as well
-	// need to look into this to see what the difference is
-
 
 
 	/***************
@@ -302,9 +301,9 @@ class RGP {
 
 
 	// get the data from a specific page for paginated results
-	public function fetch_page($full_path) {
+	public function fetch_page($page) {
 		// remove base URL from supplied path so we can use _make_call()
-		$path = str_replace(self::API_URL, "", $full_path);
+		$path = str_replace(self::API_URL, "", $page);
 
 		$response = $this->_make_call($path);
 		return $this->_generate_result($response);
