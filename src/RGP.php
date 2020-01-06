@@ -145,20 +145,6 @@ class RGP {
 	}
 
 
-	/***************
-	* DEBUG
-	***************/
-
-
-	// gets debug information for a specific request id
-	public function get_debug($request_id) {
-		$path = "/debug/$request_id";
-
-		$response = $this->_make_call($path);
-		return $this->_generate_result($response);
-
-	}
-
 
 	/***************
 	* FACILITIES

@@ -204,19 +204,6 @@ The guid of the customer record that you want.
 
 ---
 
-## Debug
-
-### get_debug()
-```php
-get_debug(string $request_id)
-```
-The API documentation says this returns debug information for a specific request ID, however, it's returning 401 Unauthorized for each of my attempts so far.
-
-**request_id**\
-This is the request id sent back with the result set of any request.
-
----
-
 ## Facilities
 
 ### get_facilities()
