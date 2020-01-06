@@ -337,8 +337,14 @@ class RGP {
 
 		// handle any http codes that are not success
 		if ($http_code < 200 || $http_code > 299) {
+			// get standard HTTP code text
 			$error = $this->_http_code_text($http_code);
-			throw new \Exception("RGP Request Error: $error");
+			
+			// get any error message from rgp
+			$result_array = json_decode($result, true);
+			$msg = $result_array["message"];
+
+			throw new \Exception("RGP Request Error: $error - $msg");
 		}
 
 		// convert json to array
