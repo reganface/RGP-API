@@ -8,7 +8,7 @@ You can view RGP's documentation of their API here: [https://api.rockgympro.com]
 You will need to generate an API key before being able to access the API.  This [Google Doc](https://docs.google.com/document/d/1J_r1QkUphSsaPa-KdqsUv0xd7r39qp3M4169ouv6rXc/edit) from RGP has instructions on how to generate your key for both cloud and locally hosted servers.
 
 # Version 1.0.0 of This Library
-The scope of this library has been reduced to provide just the basic wrapper and some small tweaks on the response structure.  Previously, there were separate methods for each endpoint of the API.  There have been several changes to the API in that time which broke this library in some areas.  The reduction in scope should future proof it a little better, as it doesn't try to do too much.
+The scope of this library has been reduced to provide just the basic wrapper and some small tweaks on the response structure.  Previously, there were separate methods for each endpoint of the API.  There were multiple changes in the API that each broke the library, so endpoint specific methods were removed in favor of a more generlized approach using the new `get()` method.
 
 ## Installation
 There are two ways to use this library.  You can install it as a dependency with [Composer](https://getcomposer.org/), or you can download RGP.php from this repository and include it in your code.
